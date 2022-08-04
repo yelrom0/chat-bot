@@ -5,11 +5,16 @@ from typing import Union
 
 # Package Imports
 import openai
+from dotenv import load_dotenv
 
-# Variables
+# Load environment variables
+load_dotenv()
+
+# Constants
 first_output = "Hello, I am a chat bot. Ask me anything."
 chat_log = f"{first_output}\n"
-openai.api_key = "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"
+openai.api_key = os.getenv("OPENAI_API_KEY")
+print(os.getenv("OPENAI_API_KEY"))
 completion = openai.Completion()
 file = open("debug_log.txt", "w")
 

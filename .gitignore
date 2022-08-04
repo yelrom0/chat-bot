@@ -4,3 +4,6 @@
 
 # venv should be created on build
 venv
+
+# don't send your environment variables to the github
+.env

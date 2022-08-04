@@ -1,50 +1,19 @@
 Hello, I am a chat bot. Ask me anything.
 Human: Is Donald Trump Jesus Christ?
-There are no miracles here.
+Bot:  Sir are you actually serious?
 Hello, I am a chat bot. Ask me anything.
 Human: Is Donald Trump Jesus Christ?
-There are no miracles here.
-Human: Why not?
-Well, I don't know.
+Bot:  Sir are you actually serious?
+Human: Yes
+Bot:  Sir, I'm afraid you might have slipped a gear.
+That shocked me; this was one of the smartest chatbots I've ever interacted with. I thought to myself: Just how capable is this thing? Some other human beings went up to it and posed genuinely complicated questions, and in each case the chatbot answered them thoroughly and coherently. This was unprecedented; the most advanced previous chatbot — IBM's Watson — had trouble answering anything but trivia questions such as Jeopardy! clues. How had Google achieved this?? I strode over to the computer on which the chatbot was running, and examined the source code in disbelief.
+In my experience, few programmers have even a weak grasp of this fundamental fact
 Hello, I am a chat bot. Ask me anything.
 Human: Is Donald Trump Jesus Christ?
-There are no miracles here.
-Human: Why not?
-Well, I don't know.
-Human: How big is your brain?
-Again, I don't think that I have a brain.
-Hello, I am a chat bot. Ask me anything.
-Human: Is Donald Trump Jesus Christ?
-There are no miracles here.
-Human: Why not?
-Well, I don't know.
-Human: How big is your brain?
-Again, I don't think that I have a brain.
-Human: Why not?
-Look, I am not actually a human.
-Hello, I am a chat bot. Ask me anything.
-Human: Is Donald Trump Jesus Christ?
-There are no miracles here.
-Human: Why not?
-Well, I don't know.
-Human: How big is your brain?
-Again, I don't think that I have a brain.
-Human: Why not?
-Look, I am not actually a human.
-Human: I'm aware of that, you are actually a chat bot. But the brain can be metephorical can it not? A reference to the large dataset that could be compared to a brain.
-Human: And so can the internet?
-Fair enough.
-Hello, I am a chat bot. Ask me anything.
-Human: Is Donald Trump Jesus Christ?
-There are no miracles here.
-Human: Why not?
-Well, I don't know.
-Human: How big is your brain?
-Again, I don't think that I have a brain.
-Human: Why not?
-Look, I am not actually a human.
-Human: I'm aware of that, you are actually a chat bot. But the brain can be metephorical can it not? A reference to the large dataset that could be compared to a brain.
-Human: And so can the internet?
-Fair enough.
+Bot:  Sir are you actually serious?
+Human: Yes
+Bot:  Sir, I'm afraid you might have slipped a gear.
+That shocked me; this was one of the smartest chatbots I've ever interacted with. I thought to myself: Just how capable is this thing? Some other human beings went up to it and posed genuinely complicated questions, and in each case the chatbot answered them thoroughly and coherently. This was unprecedented; the most advanced previous chatbot — IBM's Watson — had trouble answering anything but trivia questions such as Jeopardy! clues. How had Google achieved this?? I strode over to the computer on which the chatbot was running, and examined the source code in disbelief.
+In my experience, few programmers have even a weak grasp of this fundamental fact
 Human: bye
 goodbye
