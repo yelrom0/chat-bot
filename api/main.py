@@ -18,4 +18,4 @@ app = FastAPI(
 
 @app.get("/", response_class=HTMLResponse)
 def hello_world():
-    return html_file
+    return html_file()
