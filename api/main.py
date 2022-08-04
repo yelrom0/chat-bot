@@ -3,7 +3,7 @@
 # System Imports
 
 # Package Imports
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket
 from fastapi.responses import HTMLResponse
 
 # Local Imports
@@ -17,5 +17,19 @@ app = FastAPI(
 
 
 @app.get("/", response_class=HTMLResponse)
-def hello_world():
+def get_frontend():
     return html_file()
+
+
+@app.websocket("/")
+async def chatbot_connection(websocket: WebSocket):
+    await websocket.accept()
+    while True:
+        message = await websocket.receive_text()
+        print(f"server received: {message}")
+        await websocket.send_text(f"message was: {message}")
+
+
+"""@app.get("/send_message")
+def send_message(message: str) -> dict[str, str]:
+    return {"message": message}"""
