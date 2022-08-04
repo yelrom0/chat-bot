@@ -7,3 +7,6 @@ venv
 
 # don't send your environment variables to the github
 .env
+
+# debug log is for debugging only
+debug_log.txt
