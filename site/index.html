@@ -2,15 +2,26 @@
     <head>
         <title>Chat Bot</title>
         <style>
-            textarea {
+            #chat_output {
                 resize: none;
                 width: 60%;
                 height: 60%;
-                align-self: center;
+            }
+            #chat_input {
+                width: 30%;
+                height: 20%;
             }
         </style>
     </head>
     <body>
-        <textarea id="chat_output" readonly></textarea>
+        <div>
+            <textarea id="chat_output" readonly></textarea>
+        </div>
+        <div>
+            <textarea id="chat_input" placeholder="Type your message here..."></textarea>
+        </div>
+        <div>
+            <button id="chat_button">Send</button>
+        </div>
     </body>
 </html>
