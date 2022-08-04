@@ -30,7 +30,7 @@
 
             // when message is received from the backend server, print it to the chat output
             SOCKET.onmessage = function (event) {
-                document.getElementById('chat_output').value += event.data + '\n';
+                document.getElementById('chat_output').value += 'Chatbot: ' + event.data + '\n';
                 
             };
 
@@ -40,6 +40,7 @@
                 var message = document.getElementById('chat_input').value;
                 if (message != '') {
                     chat_input.value = '';
+                    document.getElementById('chat_output').value += 'You: ' + message + '\n';
                     if (socket_connected) {
                         SOCKET.send(message);
                     } else {

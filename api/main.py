@@ -8,6 +8,7 @@ from fastapi.responses import HTMLResponse
 
 # Local Imports
 from api.load_html import html_file
+from api.open_ai_api import AIApi
 
 app = FastAPI(
     title="Chatbot",
@@ -24,7 +25,10 @@ def get_frontend():
 @app.websocket("/")
 async def chatbot_connection(websocket: WebSocket):
     await websocket.accept()
+    # setup api and send first message back to client
+    ai_api = AIApi()
+    await websocket.send_text(ai_api.FIRST_OUTPUT)
     while True:
         message = await websocket.receive_text()
-        print(f"server received: {message}")
-        await websocket.send_text(f"message was: {message}")
+        response = ai_api.get_response(message)
+        await websocket.send_text(response)
