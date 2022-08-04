@@ -13,6 +13,7 @@ load_dotenv()
 # Constants
 FIRST_OUTPUT = "Hello, I am a chat bot. Ask me anything."
 FILE = open("debug_log.txt", "w")
+TTS_ENABLED = os.getenv("TTS_ENABLED")
 
 # Init chat log
 chat_log = f"{FIRST_OUTPUT}\n"
@@ -53,7 +54,10 @@ def respond(text: str, chat_log: str) -> Union[str, str]:
 
 def output(text: str) -> None:
     print("\n" + text)
-    os.system(f"say {os_quote(text)}")
+
+    # check if TTS enabled, if so, speak text
+    if TTS_ENABLED:
+        os.system(f"say {os_quote(text)}")
 
 
 output(FIRST_OUTPUT)
