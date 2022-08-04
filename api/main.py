@@ -28,8 +28,3 @@ async def chatbot_connection(websocket: WebSocket):
         message = await websocket.receive_text()
         print(f"server received: {message}")
         await websocket.send_text(f"message was: {message}")
-
-
-"""@app.get("/send_message")
-def send_message(message: str) -> dict[str, str]:
-    return {"message": message}"""

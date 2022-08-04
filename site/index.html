@@ -14,6 +14,7 @@
         </style>
         <script type="text/javascript">
             // Initialize connection to the backend server
+            // Todo: use jinja2 to render the html, putting in an environment variable for the hostname
             var SOCKET = new WebSocket('ws://localhost:8000');
 
             // variable is only true if connected via websocket to the backend server
@@ -48,25 +49,6 @@
                     alert('Please enter a message.');
                 }
             }
-            /*function sendMessage() {
-                var message = document.getElementById("chat_input").value;
-
-                if (message == "") {
-                    alert("Please enter a message");
-                }
-                else {
-                    var xmlhttp = new XMLHttpRequest();
-                    xmlhttp.onreadystatechange = function() {
-                        if (this.readyState == 4 && this.status == 200) {
-                            document.getElementById("chat_output").value += (this.responseText + "\n");
-                        }
-                    }
-                    // Todo: use jinja2 to render the html, putting in an environment variable for the hostname
-                    xmlhttp.open("GET", "http://localhost:8000/send_message?message=" + message, true);
-                    xmlhttp.send();
-                    document.getElementById("chat_input").value = "";
-                }
-            }*/
 
         </script>
     </head>
