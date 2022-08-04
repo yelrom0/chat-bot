@@ -11,12 +11,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Constants
-first_output = "Hello, I am a chat bot. Ask me anything."
-chat_log = f"{first_output}\n"
+FIRST_OUTPUT = "Hello, I am a chat bot. Ask me anything."
+FILE = open("debug_log.txt", "w")
+
+# Init chat log
+chat_log = f"{FIRST_OUTPUT}\n"
+
+# Init openai interface
 openai.api_key = os.getenv("OPENAI_API_KEY")
-print(os.getenv("OPENAI_API_KEY"))
 completion = openai.Completion()
-file = open("debug_log.txt", "w")
 
 
 def openai_respond(text: str, chat_log: str) -> Union[str, str]:
@@ -53,7 +56,7 @@ def output(text: str) -> None:
     os.system(f"say {os_quote(text)}")
 
 
-output(first_output)
+output(FIRST_OUTPUT)
 
 while True:
     # get some text from the user
@@ -69,8 +72,8 @@ while True:
     output(response_text)
 
     chat_log = f"{chat_log}Human: {text}\n{response_text}\n"
-    file.write(chat_log)
+    FILE.write(chat_log)
 
     if text == "bye":
-        file.close()
+        FILE.close()
         break
