@@ -18,24 +18,31 @@
             var socket = new WebSocket('ws://{{ hostname }}');
 
             // create a variable to track the chat log, without the You: and Bot: prefixes
-            var chat_log = "";
+            var chatLog = "";
 
             // variable is only true if connected via websocket to the backend server
-            var socket_connected = false;
+            var socketConnected = false;
 
             socket.addEventListener('open', function (event) {
-                socket_connected = true;
-                socket.send(chat_log);
+                socketConnected = true;
+                socket.send(chatLog);
             });
 
             socket.addEventListener('close', function (event) {
                 socket_connected = false;
+                
+                // try connecting 3 times to the backend server, with 5 second intervals
+                // but only if not connected
                 var socket = new WebSocket('ws://{{ hostname }}');
+                for(i = 0; i < 2; i++){
+                    if(socketConnected == true){break;}
+                    setTimeout(() => {var socket = new WebSocket('ws://{{ hostname }}');}, 5000);
+                }
             });
 
             // when message is received from the backend server, print it to the chat output
             socket.onmessage = function (event) {
-                chat_log += event.data + "\n";
+                chatLog += event.data + "\n";
                 document.getElementById('chat_output').value += 'Chatbot: ' + event.data + '\n';
                 
             };
@@ -46,9 +53,9 @@
                 var message = document.getElementById('chat_input').value;
                 if (message != '') {
                     chat_input.value = '';
-                    chat_log += message + "\n";
+                    chatLog += message + "\n";
                     document.getElementById('chat_output').value += 'You: ' + message + '\n';
-                    if (socket_connected) {
+                    if (socketConnected) {
                         socket.send(message);
                     } else {
                         alert('You are not connected to the backend server. Please refresh the page. Or check that the backend server is running and all is configured properly.');
