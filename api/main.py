@@ -3,11 +3,13 @@
 # System Imports
 
 # Package Imports
-from fastapi import FastAPI, WebSocket
+from fastapi import FastAPI, WebSocket, Request
 from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from dotenv import dotenv_values
 
 # Local Imports
-from api.load_html import html_file
+# from api.load_html import html_file
 from api.open_ai_api import AIApi
 
 app = FastAPI(
@@ -16,10 +18,22 @@ app = FastAPI(
     version="0.0.1",
 )
 
+# import the html as a template
+templates = Jinja2Templates(directory="site")
+
 
 @app.get("/", response_class=HTMLResponse)
-def get_frontend():
-    return html_file()
+async def get_frontend(request: Request):
+    # this is the old (pre jinja2 loading) way of loading the html file
+    # return html_file()
+
+    # load the values from the environment variables
+    env = dotenv_values(".env")
+
+    # load the html file using jinja2 and return it
+    return templates.TemplateResponse(
+        "index.html", {"request": request, "hostname": env["BACKEND_HOST"]}
+    )
 
 
 @app.websocket("/")

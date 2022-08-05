@@ -15,7 +15,7 @@
         <script type="text/javascript">
             // Initialize connection to the backend server
             // Todo: use jinja2 to render the html, putting in an environment variable for the hostname
-            var socket = new WebSocket('ws://localhost:8000');
+            var socket = new WebSocket('ws://{{ hostname }}');
 
             // create a variable to track the chat log, without the You: and Bot: prefixes
             var chat_log = "";
@@ -30,7 +30,7 @@
 
             socket.addEventListener('close', function (event) {
                 socket_connected = false;
-                var socket = new WebSocket('ws://localhost:8000');
+                var socket = new WebSocket('ws://{{ hostname }}');
             });
 
             // when message is received from the backend server, print it to the chat output
