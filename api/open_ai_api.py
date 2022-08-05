@@ -27,17 +27,16 @@ class AIApi:
 
     def get_response(self, text: str) -> str:
         # get response from openai interface
-        prompt = f"{self.chat_log}Human: {text}\n"
+        prompt = f"{self.chat_log}\n{text}\n"
         response = self.completion.create(
             prompt=prompt,
             engine="davinci",
-            stop=["\nHuman"],
             temperature=0.9,
             top_p=1,
             frequency_penalty=0,
             presence_penalty=0.6,
             best_of=1,
-            max_tokens=150,
+            max_tokens=512,
         )
 
         return response.choices[0].text.strip()
