@@ -24,8 +24,6 @@ templates = Jinja2Templates(directory="site")
 
 @app.get("/", response_class=HTMLResponse)
 async def get_frontend(request: Request):
-    # this is the old (pre jinja2 loading) way of loading the html file
-    # return html_file()
 
     # load the values from the environment variables
     env = dotenv_values(".env")
