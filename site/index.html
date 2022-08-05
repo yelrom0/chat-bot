@@ -15,21 +15,27 @@
         <script type="text/javascript">
             // Initialize connection to the backend server
             // Todo: use jinja2 to render the html, putting in an environment variable for the hostname
-            var SOCKET = new WebSocket('ws://localhost:8000');
+            var socket = new WebSocket('ws://localhost:8000');
+
+            // create a variable to track the chat log, without the You: and Bot: prefixes
+            var chat_log = "";
 
             // variable is only true if connected via websocket to the backend server
             var socket_connected = false;
 
-            SOCKET.addEventListener('open', function (event) {
+            socket.addEventListener('open', function (event) {
                 socket_connected = true;
+                socket.send(chat_log);
             });
 
-            SOCKET.addEventListener('close', function (event) {
+            socket.addEventListener('close', function (event) {
                 socket_connected = false;
+                var socket = new WebSocket('ws://localhost:8000');
             });
 
             // when message is received from the backend server, print it to the chat output
-            SOCKET.onmessage = function (event) {
+            socket.onmessage = function (event) {
+                chat_log += event.data + "\n";
                 document.getElementById('chat_output').value += 'Chatbot: ' + event.data + '\n';
                 
             };
@@ -40,9 +46,10 @@
                 var message = document.getElementById('chat_input').value;
                 if (message != '') {
                     chat_input.value = '';
+                    chat_log += message + "\n";
                     document.getElementById('chat_output').value += 'You: ' + message + '\n';
                     if (socket_connected) {
-                        SOCKET.send(message);
+                        socket.send(message);
                     } else {
                         alert('You are not connected to the backend server. Please refresh the page. Or check that the backend server is running and all is configured properly.');
                     }

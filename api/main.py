@@ -27,7 +27,13 @@ async def chatbot_connection(websocket: WebSocket):
     await websocket.accept()
     # setup api and send first message back to client
     ai_api = AIApi()
-    await websocket.send_text(ai_api.FIRST_OUTPUT)
+    init_msg = await websocket.receive_text()
+
+    if not init_msg:
+        await websocket.send_text(ai_api.FIRST_OUTPUT)
+    else:
+        ai_api.chat_log = f"{init_msg}\n"
+
     while True:
         message = await websocket.receive_text()
         response = ai_api.get_response(message)

@@ -5,6 +5,7 @@ Most of this code is taken from my previously written terminal.py file.
 """
 
 # System Imports
+from typing import Optional
 
 # Package Imports
 import openai
@@ -12,7 +13,7 @@ from dotenv import dotenv_values
 
 
 class AIApi:
-    def __init__(self):
+    def __init__(self, prev_chat_log: Optional[str] = None):
         # Load environment variables
         self.env = dotenv_values(".env")
 
