@@ -30,7 +30,7 @@ async def get_frontend(request: Request):
 
     # load the html file using jinja2 and return it
     return templates.TemplateResponse(
-        "index.html", {"request": request, "hostname": env["BACKEND_HOST"]}
+        "index.html", {"request": request, "hostname": env["WEBSOCKET_BACKEND"]}
     )
 
 

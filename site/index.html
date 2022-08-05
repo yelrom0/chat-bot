@@ -14,7 +14,7 @@
         </style>
         <script type="text/javascript">
             // Initialize connection to the backend server
-            var socket = new WebSocket('ws://{{ hostname }}');
+            var socket = new WebSocket('{{ hostname }}');
 
             // create a variable to track the chat log, without the You: and Bot: prefixes
             var chatLog = "";
@@ -32,10 +32,10 @@
                 
                 // try connecting 3 times to the backend server, with 5 second intervals
                 // but only if not connected
-                var socket = new WebSocket('ws://{{ hostname }}');
+                var socket = new WebSocket('{{ hostname }}');
                 for(i = 0; i < 2; i++){
                     if(socketConnected == true){break;}
-                    setTimeout(() => {var socket = new WebSocket('ws://{{ hostname }}');}, 5000);
+                    setTimeout(() => {var socket = new WebSocket('{{ hostname }}');}, 5000);
                 }
             });
 
