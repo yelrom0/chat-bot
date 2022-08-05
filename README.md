@@ -16,7 +16,7 @@ _note: This guide is for Linux/Mac and assumes you have docker and docker-compos
 
 ## Why did I make it?
 
-- I was talking to a friend who wasn't sure where to start for a project to learn Python, and mentioned that he wanted to make a chatbot. So on a call with him, I just started coding this. It started as a basic showing of functions and conditionals, but within a few hours I had a working chatbot. So really, it's just a lesson on something small can turn into a larger project, piece-by-piece.
+- I was talking to a friend who wasn't sure where to start for a project to learn Python, and mentioned that he wanted to make a chatbot. So on a call with him, I just started coding this. It started as a basic showing of functions and conditionals, but within a few hours I had a working chatbot. So really, it's just a lesson on how something small can turn into a larger project, piece-by-piece.
 
 ## What Stack Does It Use?
 
