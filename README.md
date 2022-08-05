@@ -16,11 +16,7 @@ _note: This guide is for Linux/Mac and assumes you have docker and docker-compos
 
 ## Why did I make it?
 
-- I was talking to a friend who was nervous about a project, and mentioned that he wanted to make a chatbot. So on a call with him, I just started coding this. It started as a basic showing of functions and conditionals, but within a few hours I had a working chatbot.
-
-## Who am I?
-
-- I'm Daniel Morley, a Backend Python Developer from Melbourne, Australia. I enjoy tinkering with my home server and sometimes write small projects like this (and sometimes some larger).
+- I was talking to a friend who wasn't sure where to start for a project to learn Python, and mentioned that he wanted to make a chatbot. So on a call with him, I just started coding this. It started as a basic showing of functions and conditionals, but within a few hours I had a working chatbot. So really, it's just a lesson on something small can turn into a larger project, piece-by-piece.
 
 ## What Stack Does It Use?
 
@@ -37,3 +33,7 @@ _note: This guide is for Linux/Mac and assumes you have docker and docker-compos
 ## Will you update this in the future?
 
 - Likely every so often, if issues come up possibly, but less likely to do so as it was meant as just a small learning project. ¯\\\_(ツ)\_/¯
+
+## Who am I?
+
+- I'm Daniel Morley, a Backend Python Developer from Melbourne, Australia. I enjoy tinkering with my home server and sometimes write small projects like this (and sometimes some larger).
