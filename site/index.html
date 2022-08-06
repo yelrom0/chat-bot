@@ -13,8 +13,6 @@
             }
         </style>
         <script type="text/javascript">
-            // Initialize connection to the backend server
-            var socket = new WebSocket('{{ hostname }}');
 
             // create a variable to track the chat log, without the You: and Bot: prefixes
             var chatLog = "";
@@ -22,22 +20,24 @@
             // variable is only true if connected via websocket to the backend server
             var socketConnected = false;
 
-            socket.addEventListener('open', function (event) {
-                socketConnected = true;
-                socket.send(chatLog);
-            });
-
-            socket.addEventListener('close', function (event) {
-                socket_connected = false;
-                
-                // try connecting 3 times to the backend server, with 5 second intervals
-                // but only if not connected
+            function connect(){
+                // Initialize connection to the backend server
                 var socket = new WebSocket('{{ hostname }}');
-                for(i = 0; i < 2; i++){
-                    if(socketConnected == true){break;}
-                    setTimeout(() => {var socket = new WebSocket('{{ hostname }}');}, 5000);
+
+                socket.onopen = function(e){
+                    socketConnected = true;
+                    socket.send(chatLog);
                 }
-            });
+            }
+
+            // if socket dies, attempt reconnection
+            socket.onclose = function(e){
+                socketConnected = false;
+                console.log('Socket is closed. Reconnect will be attempted in 5 seconds. Reason: ' + e.reason);
+                setTimeout(function() {
+                    connect();
+                }, 5000);
+            }
 
             // when message is received from the backend server, print it to the chat output
             socket.onmessage = function (event) {
@@ -45,6 +45,12 @@
                 document.getElementById('chat_output').value += 'Chatbot: ' + event.data + '\n';
                 
             };
+
+            // when there's a websocket error, print it to the log, then close the socket (thereby attempting a reconnect)
+            socket.onerror = function(error){
+                console.log('WebSocket Error: ' + error);
+                socket.close();
+            }
 
             // when the user submits the chat input, send the message to the backend server
             function sendMessage(event) {
@@ -63,6 +69,8 @@
                     alert('Please enter a message.');
                 }
             }
+
+            connect();
 
         </script>
     </head>
