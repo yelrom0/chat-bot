@@ -13,22 +13,24 @@
             }
         </style>
         <script type="text/javascript">
-
             // create a variable to track the chat log, without the You: and Bot: prefixes
             var chatLog = "";
 
             // variable is only true if connected via websocket to the backend server
             var socketConnected = false;
-
+            var socket;
+            
             function connect(){
                 // Initialize connection to the backend server
-                var socket = new WebSocket('{{ hostname }}');
+                socket = new WebSocket('{{ hostname }}');
 
                 socket.onopen = function(e){
                     socketConnected = true;
                     socket.send(chatLog);
                 }
             }
+
+            connect();
 
             // if socket dies, attempt reconnection
             socket.onclose = function(e){
@@ -69,9 +71,6 @@
                     alert('Please enter a message.');
                 }
             }
-
-            connect();
-
         </script>
     </head>
     <body>

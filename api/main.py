@@ -12,6 +12,7 @@ from dotenv import dotenv_values
 # from api.load_html import html_file
 from api.open_ai_api import AIApi
 
+# create main server
 app = FastAPI(
     title="Chatbot",
     description="A simple chatbot that uses OpenAI to respond to user input.",
