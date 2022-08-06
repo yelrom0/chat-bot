@@ -25,6 +25,7 @@
                 socket = new WebSocket('{{ hostname }}');
 
                 socket.onopen = function(e){
+                    console.log("Connection to the backend server opened");
                     socketConnected = true;
                     socket.send(chatLog);
                 }
@@ -35,16 +36,18 @@
             // if socket dies, attempt reconnection
             socket.onclose = function(e){
                 socketConnected = false;
-                console.log('Socket is closed. Reconnect will be attempted in 5 seconds. Reason: ' + e.reason);
-                setTimeout(function() {
+                console.log('Socket is closed. Reconnect will be attempted in 1 second. Reason: ' + e.reason);
+                setInterval(function() {
                     connect();
-                }, 5000);
+                }, 1000);
             }
 
-            // when message is received from the backend server, print it to the chat output
+            // when message is received from the backend server, print it to the chat output as long as it's not a keep alive message.
             socket.onmessage = function (event) {
-                chatLog += event.data + "\n";
-                document.getElementById('chat_output').value += 'Chatbot: ' + event.data + '\n';
+                if (event.data){
+                    chatLog += event.data + "\n";
+                    ocument.getElementById('chat_output').value += 'Chatbot: ' + event.data + '\n';
+                }
                 
             };
 
@@ -71,6 +74,16 @@
                     alert('Please enter a message.');
                 }
             }
+
+            // function to keep websocket connection alive to prevent timeout
+            function keepAlive() {
+                if (socketConnected) {
+                    socket.send('');
+                }
+            }
+
+            // set an interval to keep the websocket connection alive
+            setInterval(keepAlive(), 30000);
         </script>
     </head>
     <body>

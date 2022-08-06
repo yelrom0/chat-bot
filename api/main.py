@@ -49,5 +49,10 @@ async def chatbot_connection(websocket: WebSocket):
 
     while True:
         message = await websocket.receive_text()
-        response = ai_api.get_response(message)
+
+        if message:
+            response = ai_api.get_response(message)
+        else:
+            response = ""
+
         await websocket.send_text(response)
