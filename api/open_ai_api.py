@@ -28,16 +28,21 @@ class AIApi:
     def get_response(self, text: str) -> str:
         # get response from openai interface
         prompt = f"{self.chat_log}\n{text}\n"
-        response = self.completion.create(
-            prompt=prompt,
-            engine="davinci",
-            stop="\n\n",
-            temperature=1,
-            top_p=1,
-            frequency_penalty=1,
-            presence_penalty=-0.6,
-            best_of=1,
-            max_tokens=512,
-        )
+        response = ""
 
-        return response.choices[0].text.strip()
+        # loop to stop blank responses
+        while not response:
+            response = self.completion.create(
+                prompt=prompt,
+                engine="davinci",
+                stop="\n\n",
+                temperature=1,
+                top_p=1,
+                frequency_penalty=1,
+                presence_penalty=-0.6,
+                best_of=1,
+                max_tokens=512,
+            )
+            response = response.choices[0].text.strip()
+
+        return response
