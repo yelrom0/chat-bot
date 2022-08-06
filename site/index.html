@@ -16,8 +16,6 @@
             // create a variable to track the chat log, without the You: and Bot: prefixes
             var chatLog = "";
 
-            // variable is only true if connected via websocket to the backend server
-            var socketConnected = false;
             var socket;
             
             function connect(){
@@ -26,8 +24,18 @@
 
                 socket.onopen = function(e){
                     console.log("Connection to the backend server opened");
-                    socketConnected = true;
                     socket.send(chatLog);
+
+                    // websocket keep alive ping
+                    var t = setInterval(function(){
+
+                        if (socket.readyState != 1) {
+                            clearInterval(t);
+                            return;
+                        }
+                        socket.send('{ "id": 0 }');
+
+                    }, 55000);
                 }
             }
 
@@ -35,18 +43,15 @@
 
             // if socket dies, attempt reconnection
             socket.onclose = function(e){
-                socketConnected = false;
-                console.log('Socket is closed. Reconnect will be attempted in 1 second. Reason: ' + e.reason);
-                setInterval(function() {
-                    connect();
-                }, 1000);
+                console.log("Connection to the backend server closed, attempting reconnection");
+                connect();
             }
 
             // when message is received from the backend server, print it to the chat output as long as it's not a keep alive message.
             socket.onmessage = function (event) {
                 if (event.data){
                     chatLog += event.data + "\n";
-                    ocument.getElementById('chat_output').value += 'Chatbot: ' + event.data + '\n';
+                    document.getElementById('chat_output').value += 'Chatbot: ' + event.data + '\n';
                 }
                 
             };
@@ -65,7 +70,7 @@
                     chat_input.value = '';
                     chatLog += message + "\n";
                     document.getElementById('chat_output').value += 'You: ' + message + '\n';
-                    if (socketConnected) {
+                    if (socket.readyState == 1) {
                         socket.send(message);
                     } else {
                         alert('You are not connected to the backend server. Please refresh the page. Or check that the backend server is running and all is configured properly.');
@@ -74,16 +79,6 @@
                     alert('Please enter a message.');
                 }
             }
-
-            // function to keep websocket connection alive to prevent timeout
-            function keepAlive() {
-                if (socketConnected) {
-                    socket.send('');
-                }
-            }
-
-            // set an interval to keep the websocket connection alive
-            setInterval(keepAlive(), 30000);
         </script>
     </head>
     <body>
