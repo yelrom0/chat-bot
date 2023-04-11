@@ -38,7 +38,7 @@ class AIApi:
         # loop to stop blank responses
         while not response:
             response = self.chat_completion.create(
-                engine="gpt-3.5-turbo",
+                model="gpt-3.5-turbo",
                 messages=prompt,
             )
             response = response["choices"][0]["message"]["content"]
