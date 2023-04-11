@@ -15,7 +15,7 @@ from api.open_ai_api import AIApi
 # create main server
 app = FastAPI(
     title="Chatbot",
-    description="A simple chatbot that uses OpenAI to respond to user input.",
+    description="A simple chatbot that uses OpenAI to respond to user input. Now with ChatGPT.",  # noqa: E501
     version="1.0.0",
 )
 
