@@ -25,13 +25,16 @@ templates = Jinja2Templates(directory="site")
 
 @app.get("/", response_class=HTMLResponse)
 async def get_frontend(request: Request):
-
     # load the values from the environment variables
     env = dotenv_values(".env")
 
     # load the html file using jinja2 and return it
     return templates.TemplateResponse(
-        "index.html", {"request": request, "hostname": env["WEBSOCKET_BACKEND"]}
+        "index.html",
+        {
+            "request": request,
+            "hostname": env["WEBSOCKET_BACKEND"],
+        },
     )
 
 
