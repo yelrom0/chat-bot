@@ -34,7 +34,7 @@ class AIApi:
         while not response:
             response = self.completion.create(
                 prompt=prompt,
-                engine="text-davinci-002",
+                engine="gpt-3.5-turbo",
                 stop="\n\n",
                 temperature=1,
                 top_p=1,
