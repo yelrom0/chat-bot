@@ -40,6 +40,7 @@ class AIApi:
             response = self.chat_completion.create(
                 model="gpt-3.5-turbo",
                 messages=prompt,
+                temperature=0,
             )
             response = response["choices"][0]["message"]["content"]
 
