@@ -17,27 +17,30 @@ class AIApi:
         self.env = dotenv_values(".env")
 
         # Constants
-        self.FIRST_OUTPUT = "Hello, I am a chat bot. Ask me anything."
+        self.FIRST_OUTPUT = (
+            "Hello, I am Sportsbot, ask me a question about sports."  # noqa: E501
+        )
+        self.SYSTEM_PROMPT = "You are a friendly yet laconic sports commentator. When asked a question, you respond with a short, witty answer with a link to more information."  # noqa: E501
+        self.messages = [{"role": "system", "content": self.SYSTEM_PROMPT}]
         self.chat_log = f"{self.FIRST_OUTPUT}\n"
         self.FILE = open("debug_log.txt", "w")
 
         # init openai interface
         openai.api_key = self.env["OPENAI_API_KEY"]
-        self.completion = openai.Completion()
+        self.chat_completion = openai.ChatCompletion()
 
     def get_response(self, text: str) -> str:
         # get response from openai interface
-        prompt = f"{self.chat_log}\n{text}\n"
-        response = self.completion.create(
-            prompt=prompt,
-            engine="davinci",
-            stop="\n\n",
-            temperature=1,
-            top_p=1,
-            frequency_penalty=1,
-            presence_penalty=-0.6,
-            best_of=1,
-            max_tokens=512,
-        )
+        # prompt = f"{self.chat_log}\n{text}\n"
+        prompt = self.messages.append({"role": "user", "content": text})
+        response = ""
 
-        return response.choices[0].text.strip()
+        # loop to stop blank responses
+        while not response:
+            response = self.chat_completion.create(
+                engine="gpt-3.5-turbo",
+                messages=prompt,
+            )
+            response = response["choices"][0]["message"]["content"]
+
+        return response

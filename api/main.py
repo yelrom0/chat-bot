@@ -12,10 +12,11 @@ from dotenv import dotenv_values
 # from api.load_html import html_file
 from api.open_ai_api import AIApi
 
+# create main server
 app = FastAPI(
     title="Chatbot",
-    description="A simple chatbot that uses OpenAI to respond to user input.",
-    version="0.0.1",
+    description="A simple chatbot that uses OpenAI to respond to user input. Now with ChatGPT.",  # noqa: E501
+    version="1.0.0",
 )
 
 # import the html as a template
@@ -24,13 +25,16 @@ templates = Jinja2Templates(directory="site")
 
 @app.get("/", response_class=HTMLResponse)
 async def get_frontend(request: Request):
-
     # load the values from the environment variables
     env = dotenv_values(".env")
 
     # load the html file using jinja2 and return it
     return templates.TemplateResponse(
-        "index.html", {"request": request, "hostname": env["BACKEND_HOST"]}
+        "index.html",
+        {
+            "request": request,
+            "hostname": env["WEBSOCKET_BACKEND"],
+        },
     )
 
 
@@ -48,5 +52,10 @@ async def chatbot_connection(websocket: WebSocket):
 
     while True:
         message = await websocket.receive_text()
-        response = ai_api.get_response(message)
+
+        if message != '{ "id": 0 }':
+            response = ai_api.get_response(message)
+        else:
+            response = ""
+
         await websocket.send_text(response)

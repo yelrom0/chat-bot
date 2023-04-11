@@ -13,38 +13,54 @@
             }
         </style>
         <script type="text/javascript">
-            // Initialize connection to the backend server
-            var socket = new WebSocket('ws://{{ hostname }}');
-
             // create a variable to track the chat log, without the You: and Bot: prefixes
             var chatLog = "";
 
-            // variable is only true if connected via websocket to the backend server
-            var socketConnected = false;
+            var socket;
+            
+            function connect(){
+                // Initialize connection to the backend server
+                socket = new WebSocket('{{ hostname }}');
 
-            socket.addEventListener('open', function (event) {
-                socketConnected = true;
-                socket.send(chatLog);
-            });
+                socket.onopen = function(e){
+                    console.log("Connection to the backend server opened");
+                    socket.send(chatLog);
 
-            socket.addEventListener('close', function (event) {
-                socket_connected = false;
-                
-                // try connecting 3 times to the backend server, with 5 second intervals
-                // but only if not connected
-                var socket = new WebSocket('ws://{{ hostname }}');
-                for(i = 0; i < 2; i++){
-                    if(socketConnected == true){break;}
-                    setTimeout(() => {var socket = new WebSocket('ws://{{ hostname }}');}, 5000);
+                    // websocket keep alive ping
+                    var t = setInterval(function(){
+
+                        if (socket.readyState != 1) {
+                            clearInterval(t);
+                            return;
+                        }
+                        socket.send('{ "id": 0 }');
+
+                    }, 55000);
                 }
-            });
+            }
 
-            // when message is received from the backend server, print it to the chat output
+            connect();
+
+            // if socket dies, attempt reconnection
+            socket.onclose = function(e){
+                console.log("Connection to the backend server closed, attempting reconnection");
+                connect();
+            }
+
+            // when message is received from the backend server, print it to the chat output as long as it's not a keep alive message.
             socket.onmessage = function (event) {
-                chatLog += event.data + "\n";
-                document.getElementById('chat_output').value += 'Chatbot: ' + event.data + '\n';
+                if (event.data){
+                    chatLog += event.data + "\n";
+                    document.getElementById('chat_output').value += 'Chatbot: ' + event.data + '\n';
+                }
                 
             };
+
+            // when there's a websocket error, print it to the log, then close the socket (thereby attempting a reconnect)
+            socket.onerror = function(error){
+                console.log('WebSocket Error: ' + error);
+                socket.close();
+            }
 
             // when the user submits the chat input, send the message to the backend server
             function sendMessage(event) {
@@ -54,7 +70,7 @@
                     chat_input.value = '';
                     chatLog += message + "\n";
                     document.getElementById('chat_output').value += 'You: ' + message + '\n';
-                    if (socketConnected) {
+                    if (socket.readyState == 1) {
                         socket.send(message);
                     } else {
                         alert('You are not connected to the backend server. Please refresh the page. Or check that the backend server is running and all is configured properly.');
@@ -63,7 +79,6 @@
                     alert('Please enter a message.');
                 }
             }
-
         </script>
     </head>
     <body>
