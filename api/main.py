@@ -16,7 +16,7 @@ from api.open_ai_api import AIApi
 app = FastAPI(
     title="Chatbot",
     description="A simple chatbot that uses OpenAI to respond to user input.",
-    version="0.0.1",
+    version="1.0.0",
 )
 
 # import the html as a template
