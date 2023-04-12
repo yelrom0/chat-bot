@@ -27,7 +27,7 @@ class AIApi:
 
         # init openai interface
         openai.api_key = self.env["OPENAI_API_KEY"]
-        self.chat_completion = openai.ChatCompletion()
+        self.chat_completion = openai.ChatCompletion(engine="gpt-3.5-turbo")
 
     def get_response(self, text: str) -> str:
         # get response from openai interface
@@ -37,7 +37,6 @@ class AIApi:
         # loop to stop blank responses
         while not response:
             response = self.chat_completion.create(
-                model="gpt-3.5-turbo",
                 messages=messages,
                 temperature=0,
             )
