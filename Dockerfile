@@ -9,4 +9,4 @@ RUN pip install --no-cache-dir --upgrade -r /requirements.txt
 WORKDIR /src
 COPY . .
 
-CMD ["hypercorn", "api.main:app", "--bind", "0.0.0.0:8000"]
+CMD ["bash", "run.sh"]
