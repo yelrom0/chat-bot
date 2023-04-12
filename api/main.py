@@ -54,7 +54,7 @@ async def chatbot_connection(websocket: WebSocket):
         message = await websocket.receive_text()
 
         if message is not None and message != '{ "id": 0 }':
-            response = ai_api.get_response(message)
+            response = await ai_api.get_response(message)
         else:
             response = ""
 
