@@ -3,5 +3,11 @@ version: "3"
 services:
   api:
     build: .
-    ports: 
+    ports:
       - 807:8000
+    volumes:
+      - type: bind
+        source: ~/Documents/code/chat-bot
+        target: /src
+    restart: unless-stopped
+    container_name: chat-bot

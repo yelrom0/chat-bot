@@ -33,13 +33,14 @@ class AIApi:
         # get response from openai interface
         # prompt = f"{self.chat_log}\n{text}\n"
         messages = self.messages.append({"role": "user", "content": text})
+        response = ""
         # loop to stop blank responses
-
-        response = self.chat_completion.create(
-            model="gpt-3.5-turbo",
-            messages=messages,
-            temperature=0,
-        )
-        response = response["choices"][0]["message"]["content"]
+        while not response:
+            response = self.chat_completion.create(
+                model="gpt-3.5-turbo",
+                messages=messages,
+                temperature=0,
+            )
+            response = response["choices"][0]["message"]["content"]
         self.messages.append({"role": "system", "content": response})
         return response
