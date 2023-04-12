@@ -40,5 +40,5 @@ class AIApi:
             temperature=0,
         )
         response = response.choices[0].message.content
-        self.messages.append({"role": "system", "content": f"{response}"})
+        self.messages.append({"role": "assistant", "content": f"{response}"})
         return response
